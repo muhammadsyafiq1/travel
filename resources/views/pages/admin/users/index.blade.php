@@ -8,6 +8,11 @@
 <div class="container-fluid">
     <div class="card shadow mb-4">
         <div class="card-header py-3">
+            @if (session('info'))
+                <div class="alert alert-success">
+                    {{ session('info') }}
+                </div>
+            @endif
             <h6 class="m-0 font-weight-bold text-primary">
                 <a href="{{ route('users.create') }}" class="btn btn-primary btn-sm"><i class="fa fa-plus text-white"></i></a>
             </h6>

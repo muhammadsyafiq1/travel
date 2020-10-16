@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateRequestUser;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -35,9 +37,23 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateRequestUser $request)
     {
-        //
+        $user = new User;
+        $user->name = $request->name;
+        $user->username = $request->username;
+        $user->email = $request->email;
+        $user->roles = $request->roles;
+        $user->password = Hash::make($request->password);
+        if($request->file('avatar')){
+            $file = $request->file('avatar')->store(
+                'avatars','public'
+            );
+        }
+        $user->avatar = $file;
+        $user->save();
+
+        return redirect(route('users.index'))->with('info','User Has Been Created');
     }
 
     /**
