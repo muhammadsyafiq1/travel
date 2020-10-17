@@ -42,7 +42,16 @@
                         @endif
                     </td>
                     <td>{{ date('d-M-y',strtotime($user->created_at)) }}</td>
-                    <td>TODO</td>
+                    <td>
+                        <form action="{{ route('users.destroy', $user->id) }}" method="post" class="d-inline">
+                        @csrf
+                        <a href="{{ route('users.edit', $user->id) }}" class="btn btn-sm btn-warning"><i class="fa fa-edit"></i></a>
+                        <a href="{{ route('users.show', $user->id) }}" class="btn btn-sm btn-secondary"><i class="fa fa-eye"></i></a>
+                        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you Sure ?')">
+                            <i class="fa fa-trash"></i>
+                        </button>
+                        </form>
+                    </td>
                 </tr>
                 @endforeach
             </tbody>
