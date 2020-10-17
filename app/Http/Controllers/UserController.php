@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateRequestUser;
+use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -76,7 +77,8 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = User::findOrFail($id);
+        return view('pages.admin.users.edit', compact('user'));
     }
 
     /**
@@ -86,9 +88,25 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateUserRequest $request, $id)
     {
-        //
+        $user = User::findOrFail($id);
+        $user->name = $request->name;
+        $user->username = $request->username;
+        $user->email = $request->email;
+        $user->roles = $request->roles;
+
+        if($request->hasFile('avatar')){
+            if($user->avatr && file_exists(storage_path('app/public/'.$user->avatar))){
+                Storage::delete('public/'.$user->avatar);
+            }
+            $file = $request->file('avatar')->store(
+                'avatars','public'
+            );
+            $user->avatar = $file;
+        }
+        $user->save();
+        return redirect(route('users.index'))->with('info','User successfully Updated');
     }
 
     /**
@@ -99,6 +117,8 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $user = User::findOrFail($id);
+        $user->delete();
+        return redirect(route('users.index'))->with('info', 'User successfully Deleted');
     }
 }
