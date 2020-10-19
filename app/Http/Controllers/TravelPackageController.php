@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateTravelRequest;
+use App\Http\Requests\UpdateTravelRequest;
 use App\Models\TravelPackage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -37,7 +39,7 @@ class TravelPackageController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateTravelRequest $request)
     {
         $data = $request->all();
         // dd($data);
@@ -57,7 +59,8 @@ class TravelPackageController extends Controller
      */
     public function show($id)
     {
-        //
+        $travel = TravelPackage::findOrFail($id);
+        return view('pages.admin.travels.show', compact('travel'));
     }
 
     /**
@@ -68,7 +71,8 @@ class TravelPackageController extends Controller
      */
     public function edit($id)
     {
-        //
+        $travel = TravelPackage::findOrFail($id);
+        return view('pages.admin.travels.edit', compact('travel'));
     }
 
     /**
@@ -78,9 +82,14 @@ class TravelPackageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateTravelRequest $request, $id)
     {
-        //
+        $data = $request->all();
+        $data['slug'] = Str::slug($request->title);
+        $item = TravelPackage::findOrFail($id);
+        $item->update($data);
+
+        return redirect(route('travels.index'))->with('info',' Travel has been Updated');
     }
 
     /**
