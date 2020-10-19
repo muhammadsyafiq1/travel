@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CreateRequestUser;
 use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
+use Illuminate\Auth\Access\Gate;
+use Illuminate\Support\Facades\Gate as FacadesGate;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 
@@ -117,8 +119,12 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        $user = User::findOrFail($id);
-        $user->delete();
-        return redirect(route('users.index'))->with('info', 'User successfully Deleted');
+        if(FacadesGate::allows('isAdmin')) {
+            $user = User::findOrFail($id);
+            $user->delete();
+            return redirect(route('users.index'))->with('info', 'User successfully Deleted');
+        } else {
+            return abort(403);
+        }
     }
 }

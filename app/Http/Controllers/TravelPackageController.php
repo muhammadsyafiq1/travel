@@ -6,6 +6,7 @@ use App\Models\TravelPackage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Gate as FacadesGate;
 
 class TravelPackageController extends Controller
 {
@@ -90,6 +91,12 @@ class TravelPackageController extends Controller
      */
     public function destroy($id)
     {
-        //
+        if(FacadesGate::allows('isAdmin')){
+            $travel = TravelPackage::findOrFail($id);
+            $travel->delete();
+            return redirect(route('travels.index'))->with('info',' Travel has been Deleted');
+        }else {
+            return abort(403);
+        }
     }
 }

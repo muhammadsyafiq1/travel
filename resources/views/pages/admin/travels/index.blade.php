@@ -25,18 +25,30 @@
                     <th>Travel</th>
                     <th>Type</th>
                     <th>Price</th>
-                    <th>Language</th>
                     <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach ($travels as $travel)
                 <tr>
-                    <td>{{ $travel->title }}</td>
+                    <td>
+                        <span class="badge badge-success" style="font-size: 14px">
+                            {{ $travel->title }}
+                        </span>
+                    </td>
                     <td>{{ $travel->type }}</td>
-                    <td>{{ $travel->price }}</td>
-                    <td>{{ $travel->language }}</td>
-                    <td>Todo</td>
+                    <td>Rp. {{ number_format($travel->price) }}</td>
+                    <td>
+                        <form action="{{ route('travels.destroy',$travel->id) }}" method="post" class="d-inline">
+                        @csrf
+                        @method('DELETE')
+                            <a href="{{ route('travels.show',$travel->id) }}" class="btn btn-sm btn-secondary"><i class="fa fa-eye"></i></a>
+                            <a href="{{ route('travels.edit',$travel->id) }}" class="btn btn-sm btn-warning"><i class="fa fa-edit"></i></a>
+                            <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you Sure ?')">
+                                <i class="fa fa-trash"></i>
+                            </button>
+                        </form>
+                    </td>
                 </tr>
                 @endforeach
             </tbody>
