@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateGalleryRequest;
+use App\Models\Gallery;
+use App\Models\TravelPackage;
 use Illuminate\Http\Request;
 
 class GalleryController extends Controller
@@ -13,7 +16,8 @@ class GalleryController extends Controller
      */
     public function index()
     {
-        //
+        $galleries = Gallery::with('TravelPackage')->get();
+        return view('pages.admin.galleries.index', compact('galleries'));
     }
 
     /**
@@ -23,7 +27,8 @@ class GalleryController extends Controller
      */
     public function create()
     {
-        //
+        $travels = TravelPackage::all();
+        return view('pages.admin.galleries.create', compact('travels'));
     }
 
     /**
@@ -32,9 +37,12 @@ class GalleryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateGalleryRequest $request)
     {
-        //
+        $data = $request->all();
+        $data['image'] = $request->file('image')->store('galleries','public');
+        Gallery::create($data);
+        return redirect(route('galleries.index'))->with('info','Gallery has been Created');
     }
 
     /**
@@ -79,6 +87,8 @@ class GalleryController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $gallery = Gallery::findOrFail($id);
+        $gallery->delete();
+        return redirect(route('galleries.index'))->with('info','Gallery has been Deleted');
     }
 }

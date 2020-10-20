@@ -48,7 +48,7 @@
       <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
         <div class="bg-white py-2 collapse-inner rounded">
           <a class="collapse-item" href="{{ route('travels.index') }}">Travel</a>
-          <a class="collapse-item" href="utilities-border.html">Travel Picture</a>
+          <a class="collapse-item" href="{{ route('galleries.index') }}">Travel Picture</a>
           <a class="collapse-item" href="utilities-animation.html">Expired</a>
         </div>
       </div>

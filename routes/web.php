@@ -24,4 +24,5 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboard');
     Route::resource('users', App\Http\Controllers\UserController::class);
     Route::resource('travels', App\Http\Controllers\TravelPackageController::class);
+    Route::resource('galleries', App\Http\Controllers\GalleryController::class);
 });
