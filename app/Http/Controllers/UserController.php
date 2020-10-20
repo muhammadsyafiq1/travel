@@ -9,6 +9,7 @@ use Illuminate\Auth\Access\Gate;
 use Illuminate\Support\Facades\Gate as FacadesGate;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
+use Yajra\DataTables\Facades\DataTables;
 
 class UserController extends Controller
 {
@@ -19,9 +20,34 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::all();
-        // dd($users);
-        return view('pages.admin.users.index', compact('users'));
+        if(request()->ajax())
+        {
+            $query = User::query();
+
+            return DataTables::of($query)
+            ->addColumn('action', function($item){
+                return '
+                    <form action="'. route('users.destroy',$item->id) .'"method="POST">
+                        '. method_field('delete') . csrf_field() .'
+                        <a class="btn btn-sm btn-secondary" href="'. route('users.show',$item->id) .'">
+                            <i class="fa fa-eye"></i>
+                        </a>
+                        <a class="btn btn-sm btn-warning" href="'. route('users.edit',$item->id) .'">
+                            <i class="fa fa-edit"></i>
+                        </a>
+                        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm("Are you Sure?")">
+                            <i class="fa fa-trash"></i>
+                        </button>
+                    </form>
+                ';
+            })
+            ->editColumn('avatar', function($item){
+                return $item->avatar ? '<img src="'.Storage::url($item->avatar).'" style="max-height: 40px;"/>' : '';
+            })
+            ->rawColumns(['action','index'])
+            ->make();
+        }
+        return view('pages.admin.users.index');
     }
 
     /**

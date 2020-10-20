@@ -54,6 +54,7 @@
   </a>
 
 @include('includes.backend.scripts')
+@stack('scripts')
 
 </body>
 

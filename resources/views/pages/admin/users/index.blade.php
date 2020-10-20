@@ -19,42 +19,15 @@
         </div>
         <div class="card-body">
         <div class="table-responsive">
-            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+            <table id="crudtable" class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
             <thead>
                 <tr>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Roles</th>
-                    <th>Date sign</th>
-                    <th>Actions</th>
+                    <th>name</th>
+                    <th>email</th>
+                    <th>action</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach ($users as $user)
-                <tr>
-                    <td>{{ $user->name }}</td>
-                    <td>{{ $user->email }}</td>
-                    <td>
-                        @if ($user->roles == 'admin')
-                            <span class="badge badge-success">{{ $user->roles }}</span>
-                        @else
-                            <span class="badge badge-secondary">{{ $user->roles }}</span>
-                        @endif
-                    </td>
-                    <td>{{ date('d-M-y',strtotime($user->created_at)) }}</td>
-                    <td>
-                        <form action="{{ route('users.destroy', $user->id) }}" method="post" class="d-inline">
-                        @method('DELETE')
-                        @csrf
-                            <a href="{{ route('users.edit', $user->id) }}" class="btn btn-sm btn-warning"><i class="fa fa-edit"></i></a>
-                            <a href="{{ route('users.show', $user->id) }}" class="btn btn-sm btn-secondary"><i class="fa fa-eye"></i></a>
-                            <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you Sure ?')">
-                                <i class="fa fa-trash"></i>
-                            </button>
-                        </form>
-                    </td>
-                </tr>
-                @endforeach
             </tbody>
             </table>
         </div>
@@ -62,3 +35,27 @@
     </div>
 </div>
 @endsection
+
+@push('scripts')
+    <script>
+        var datatable = $("#crudtable").DataTable({
+            processing: true,
+            serverSide: true,
+            ordering: true,
+            ajax: {
+                url: '{!! url()->current() !!}',
+            },
+            columns: [
+                {data: 'name', name: 'name'},
+                {data: 'email', name: 'email'},
+                {
+                    data: 'action',
+                    name: 'action',
+                    orderable: false,
+                    searcable: false,
+                    width: '15%'
+                },
+            ]
+        })
+    </script>
+@endpush
