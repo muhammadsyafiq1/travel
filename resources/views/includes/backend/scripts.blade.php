@@ -12,7 +12,7 @@
  <script src="/backend/vendor/chart.js/Chart.min.js"></script>
 
  <!--datatbles-->
- <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
+ <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.22/datatables.min.js"></script>
 
  <!-- Page level custom scripts -->
  <script src="/backend/js/demo/chart-area-demo.js"></script>

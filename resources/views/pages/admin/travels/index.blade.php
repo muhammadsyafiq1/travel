@@ -19,7 +19,7 @@
         </div>
         <div class="card-body">
         <div class="table-responsive">
-            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+            <table id="crudtable" class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
             <thead>
                 <tr>
                     <th>Travel</th>
@@ -29,28 +29,6 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($travels as $travel)
-                <tr>
-                    <td>
-                        <span class="badge badge-success" style="font-size: 14px">
-                            {{ $travel->title }}
-                        </span>
-                    </td>
-                    <td>{{ $travel->type }}</td>
-                    <td>Rp. {{ number_format($travel->price) }}</td>
-                    <td>
-                        <form action="{{ route('travels.destroy',$travel->id) }}" method="post" class="d-inline">
-                        @csrf
-                        @method('DELETE')
-                            <a href="{{ route('travels.show',$travel->id) }}" class="btn btn-sm btn-secondary"><i class="fa fa-eye"></i></a>
-                            <a href="{{ route('travels.edit',$travel->id) }}" class="btn btn-sm btn-warning"><i class="fa fa-edit"></i></a>
-                            <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you Sure ?')">
-                                <i class="fa fa-trash"></i>
-                            </button>
-                        </form>
-                    </td>
-                </tr>
-                @endforeach
             </tbody>
             </table>
         </div>
@@ -58,3 +36,28 @@
     </div>
 </div>
 @endsection
+
+@push('scripts')
+    <script>
+        var datatable = $("#crudtable").DataTable({
+            processing: true,
+            serverSide: true,
+            ordering: true,
+            ajax: {
+                url: '{!! url()->current() !!}',
+            },
+            columns: [
+                {data: 'title', name: 'title'},
+                {data: 'type', name: 'type'},
+                {data: 'price', name: 'price'},
+                {
+                    data: 'action',
+                    name: 'action',
+                    orderable: false,
+                    searcable: false,
+                    width: '15%'
+                },
+            ]
+        })
+    </script>
+@endpush 

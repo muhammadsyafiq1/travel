@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Gate as FacadesGate;
+use Yajra\DataTables\Facades\DataTables;
 
 class TravelPackageController extends Controller
 {
@@ -19,8 +20,31 @@ class TravelPackageController extends Controller
      */
     public function index()
     {
-        $travels = TravelPackage::all();
-        return view('pages.admin.travels.index', compact('travels'));
+       if(request()->ajax())
+       {
+           $query = TravelPackage::query();
+
+           return DataTables::of($query)
+           ->addColumn('action', function($item){
+               return '
+                <form action="'. route('travels.destroy',$item->id) .'" method="POST" class="d-inline">
+                    '. method_field('DELETE') . csrf_field() .'
+                    <a href="'. route('travels.show',$item->id) .'" class="btn btn-secondary btn-sm">
+                        <i class="fa fa-eye"></i>
+                    <a/>
+                    <a href="'. route('travels.edit',$item->id) .'" class="btn btn-warning btn-sm">
+                        <i class="fa fa-edit"></i>
+                    <a/>
+                    <button type="submit" class="btn btn-sm btn-danger" onClick="return confirm("Are you Sure?")">
+                        <i class="fa fa-trash"></i>
+                    </button>
+                </form>
+               ';
+           })
+           ->rawColumns(['action','index'])
+           ->make();
+       }
+       return view('pages.admin.travels.index');
     }
 
     /**

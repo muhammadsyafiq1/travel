@@ -28,21 +28,6 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($galleries as $gallery)
-                <tr>
-                    <td>{{ $gallery->TravelPackage->title }}</td>
-                    <td>
-                        <img src="{{ Storage::url($gallery->image) }}" alt="image" style="width: 80px">
-                    </td>
-                    <td>
-                        <form action="{{ route('galleries.destroy',$gallery->id) }}" method="POST">
-                        @method('DELETE')
-                        @csrf
-                            <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you Sure ?')">Delete</button>
-                        </form>
-                    </td>
-                </tr>
-                @endforeach
             </tbody>
             </table>
         </div>

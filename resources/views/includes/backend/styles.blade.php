@@ -6,4 +6,4 @@
 <link href="/backend/css/sb-admin-2.min.css" rel="stylesheet">
 
 <!--datatables-->
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.21/datatables.min.css"/>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.22/datatables.min.css"/>
