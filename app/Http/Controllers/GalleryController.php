@@ -6,6 +6,8 @@ use App\Http\Requests\CreateGalleryRequest;
 use App\Models\Gallery;
 use App\Models\TravelPackage;
 use Illuminate\Http\Request;
+use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Facades\Storage;
 
 class GalleryController extends Controller
 {
@@ -16,8 +18,28 @@ class GalleryController extends Controller
      */
     public function index()
     {
-        $galleries = Gallery::with('TravelPackage')->get();
-        return view('pages.admin.galleries.index', compact('galleries'));
+       if(request()->ajax())
+       {
+           $query = Gallery::with(['travelpackage']);
+           return DataTables::of($query)
+
+           ->addColumn('action', function($item){
+               return '
+               <form action="'.route('galleries.destroy',$item->id).'" method="POST">
+               '.method_field('delete'). csrf_field().'
+                    <button class="btn btn-sm btn-danger d-inline" type="submit" onClick="return confirm("Are you Sure?")">
+                        <i class="fa fa-trash"></i>
+                   </button>
+               </form>
+               ';
+           })
+           ->editColumn('image', function($item){
+                return $item->image ? '<img src="'.Storage::url($item->image).'" style="width: 80px;"/>' : '';
+            })
+            ->rawColumns(['action','image'])
+            ->make();
+        }
+        return view('pages.admin.galleries.index');
     }
 
     /**

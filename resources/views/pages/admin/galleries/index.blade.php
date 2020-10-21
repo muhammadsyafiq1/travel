@@ -19,7 +19,7 @@
         </div>
         <div class="card-body">
         <div class="table-responsive">
-            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+            <table id="crudtable" class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
             <thead>
                 <tr>
                     <th>Travel</th>
@@ -35,3 +35,27 @@
     </div>
 </div>
 @endsection
+
+@push('scripts')
+    <script>
+        var datatable = $("#crudtable").DataTable({
+            processing: true,
+            serverSide: true,
+            ordering: true,
+            ajax: {
+                url: '{!! url()->current() !!}',
+            },
+            columns: [
+                {data: 'travelpackage.title', name: 'travelpackage.title'},
+                {data: 'image', name: 'image'},
+                {
+                    data: 'action',
+                    name: 'action',
+                    orderable: false,
+                    searcable: false,
+                    width: '15%'
+                },
+            ]
+        })
+    </script>
+@endpush
