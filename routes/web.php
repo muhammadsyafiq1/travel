@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\TravelPackageController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -24,5 +25,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboard');
     Route::resource('users', App\Http\Controllers\UserController::class);
     Route::resource('travels', App\Http\Controllers\TravelPackageController::class);
+    Route::get('travel', [TravelPackageController::class, 'expired'])->name('travel.expired');
+    Route::get('travel/restore/{id}', [TravelPackageController::class, 'restore'])->name('travel.restore');
     Route::resource('galleries', App\Http\Controllers\GalleryController::class);
 });

@@ -49,7 +49,7 @@
         <div class="bg-white py-2 collapse-inner rounded">
           <a class="collapse-item" href="{{ route('travels.index') }}">Travel</a>
           <a class="collapse-item" href="{{ route('galleries.index') }}">Travel Picture</a>
-          <a class="collapse-item" href="utilities-animation.html">Expired</a>
+          <a class="collapse-item" href="{{ route('travel.expired') }}">Expired</a>
         </div>
       </div>
     </li>

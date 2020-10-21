@@ -132,4 +132,37 @@ class TravelPackageController extends Controller
             return abort(403);
         }
     }
+
+    public function expired()
+    {  
+        if(request()->ajax())
+        {
+            $query = TravelPackage::onlyTrashed();
+
+            return DataTables::of($query)
+            ->addColumn('action', function($item){
+                return '
+                    <div class="form-group d-inline">
+                        <a href="'. route('travel.restore',$item->id) .'" class="btn btn-success btn-sm">
+                            Active
+                        <a/>
+                        <a href="'. route('travels.edit',$item->id) .'" class="btn btn-danger btn-sm">
+                            Delete
+                        <a/>
+                    </div>
+                ';
+            })
+            ->rawColumns(['action','index'])
+            ->make();
+        }
+       return view('pages.admin.travels.expired');
+    }
+
+    public function restore($id)
+    {
+        $travel = TravelPackage::onlyTrashed()->where('id', $id);
+        $travel->restore();
+        return redirect()->back()->with('info', 'Travel Berhasil Direstore');
+    }
+
 }
