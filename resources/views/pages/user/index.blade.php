@@ -10,15 +10,15 @@
         <section class="section-stats row justify-content-center" 
             id="stats">
             <div class="col-3 col-md-2 stats-detail">
-                <h2>20K</h2>
-                <P>Mmebers</P>
+                <h2>{{ $customer }}</h2>
+                <P>Members</P>
             </div>
             <div class="col-3 col-md-2 stats-detail">
                 <h2>3K</h2>
                 <P>Hotels</P>
             </div>
             <div class="col-3 col-md-2 stats-detail">
-                <h2>12K</h2>
+                <h2>{{ $country }}</h2>
                 <P>Countries</P>
             </div>
             <div class="col-3 col-md-2 stats-detail">

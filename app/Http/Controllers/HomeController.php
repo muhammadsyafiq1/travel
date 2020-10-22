@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\TravelPackage;
+use App\Models\User;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -20,7 +22,9 @@ class HomeController extends Controller
      */
     public function index()
     {
+        $customer = User::where('roles', 'customer')->count();
         $travels = TravelPackage::with('gallery')->has('gallery')->get();
-        return view('pages.user.index', compact('travels'));
+        $country = DB::table('travel_packages')->distinct('country')->count();
+        return view('pages.user.index', compact('travels','customer','country'));
     }
 }
