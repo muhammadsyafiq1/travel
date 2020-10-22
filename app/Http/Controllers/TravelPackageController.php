@@ -186,4 +186,19 @@ class TravelPackageController extends Controller
         return redirect()->back()->with('info','Travel berhasil dihapus permanen');
     }
 
+    public function lengkap(Request $request)
+    {
+        $filterKeyword = $request->keyword;
+
+        if($filterKeyword){
+           $travels = TravelPackage::with('gallery')->has('gallery')
+           ->where('country', 'LIKE', "%$filterKeyword%")
+           ->get();
+        } else {
+            $travels = TravelPackage::with('gallery')->has('gallery')->get();
+        }
+        
+        return view('pages.user.lengkap', compact('travels'));
+    }
+
 }

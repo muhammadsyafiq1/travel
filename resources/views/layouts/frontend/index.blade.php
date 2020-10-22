@@ -12,9 +12,6 @@
     <!--navigasi-->
     @include('includes.frontend.navbar')
 
-    <!-- header -->
-    @include('includes.frontend.header')
-
     <!-- content -->
     @yield('content')
 
