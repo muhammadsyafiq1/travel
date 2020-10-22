@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\TravelPackage;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -19,6 +20,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('pages.user.index');
+        $travels = TravelPackage::with('gallery')->has('gallery')->get();
+        return view('pages.user.index', compact('travels'));
     }
 }

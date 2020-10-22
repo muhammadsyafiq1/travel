@@ -49,11 +49,12 @@
         id="popularContent">
         <div class="container">
             <div class="row justify-content-center section-popular-travel">
+                @foreach ($travels as $travel)
                 <div class="col-sm-6 col-md-4 col-lg-3">
                     <div class="card-travel text-center d-flex flex-column"
-                        style="background-image: url('/frontend/frontend/images/logos/popular-1.jpg');">
-                        <div class="travel-country">INDONESIA</div>
-                        <div class="travel-location">DARATAN, BALI</div>
+                        style="background-image: url('{{ $travel->gallery->count() ? Storage::url($travel->gallery->first()->image) : ''}}');">
+                        <div class="travel-country">{{ $travel->title }}</div>
+                        <div class="travel-location">{{ $travel->country }}</div>
                         <div class="travel-button mt-auto">
                             <a href="#" class="btn btn-travel-details px-4">
                                 View Details
@@ -61,42 +62,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-6 col-md-4 col-lg-3">
-                    <div class="card-travel text-center d-flex flex-column"
-                        style="background-image: url('/frontend/frontend/images/logos/popular-2.jpg');">
-                        <div class="travel-country">INDONESIA</div>
-                        <div class="travel-location">BROMO, MALANG</div>
-                        <div class="travel-button mt-auto">
-                            <a href="#" class="btn btn-travel-details px-4">
-                                View Details
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-4 col-lg-3">
-                    <div class="card-travel text-center d-flex flex-column"
-                        style="background-image: url('/frontend/frontend/images/logos/popular-3.jpg');">
-                        <div class="travel-country">INDONESIA</div>
-                        <div class="travel-location">NUSA, PENINDA</div>
-                        <div class="travel-button mt-auto">
-                            <a href="#" class="btn btn-travel-details px-4">
-                                View Details
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-4 col-lg-3">
-                    <div class="card-travel text-center d-flex flex-column"
-                        style="background-image: url('/frontend/frontend/images/logos/popular-4.jpg');">
-                        <div class="travel-country">UAE</div>
-                        <div class="travel-location">DUBAI</div>
-                        <div class="travel-button mt-auto">
-                            <a href="#" class="btn btn-travel-details px-4">
-                                View Details
-                            </a>
-                        </div>
-                    </div>
-                </div>
+                @endforeach
             </div>
         </div>
     </section>
