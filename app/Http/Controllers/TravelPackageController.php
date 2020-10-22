@@ -146,7 +146,7 @@ class TravelPackageController extends Controller
                         <a href="'. route('travel.restore',$item->id) .'" class="btn btn-success btn-sm">
                             Active
                         <a/>
-                        <a href="'. route('travels.edit',$item->id) .'" class="btn btn-danger btn-sm">
+                        <a href="'. route('travel.permanent',$item->id) .'" class="btn btn-danger btn-sm">
                             Delete
                         <a/>
                     </div>
@@ -163,6 +163,27 @@ class TravelPackageController extends Controller
         $travel = TravelPackage::onlyTrashed()->where('id', $id);
         $travel->restore();
         return redirect()->back()->with('info', 'Travel Berhasil Direstore');
+    }
+
+    public function restoreall(Request $request)
+    {
+        $travel = TravelPackage::onlyTrashed();
+        $travel->restore();
+        return redirect()->back()->with('info','Restore semua data berhasil');
+    }
+
+    public function permanent($id)
+    {
+        $travel = TravelPackage::onlyTrashed()->where('id', $id);
+        $travel->forceDelete();
+        return redirect()->back()->with('info','Travel berhasil dihapus permanen');
+    }
+
+    public function permanentall()
+    {
+        $travel = TravelPackage::onlyTrashed();
+        $travel->forceDelete();
+        return redirect()->back()->with('info','Travel berhasil dihapus permanen');
     }
 
 }

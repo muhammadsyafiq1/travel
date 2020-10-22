@@ -27,5 +27,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('travels', App\Http\Controllers\TravelPackageController::class);
     Route::get('travel', [TravelPackageController::class, 'expired'])->name('travel.expired');
     Route::get('travel/restore/{id}', [TravelPackageController::class, 'restore'])->name('travel.restore');
+    Route::get('travel/restoreall', [TravelPackageController::class, 'restoreall'])->name('travel.restoreall');
+    Route::get('travel/permanent/{id}', [TravelPackageController::class, 'permanent'])->name('travel.permanent');
+    Route::get('travel/permanentall', [TravelPackageController::class, 'permanentall'])->name('travel.permanentall');
     Route::resource('galleries', App\Http\Controllers\GalleryController::class);
 });

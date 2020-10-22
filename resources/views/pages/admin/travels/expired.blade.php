@@ -13,9 +13,15 @@
                     {{ session('info') }}
                 </div>
             @endif
-            <h6 class="m-0 font-weight-bold text-primary">
-                <a href="{{ route('travels.create') }}" class="btn btn-primary btn-sm"><i class="fa fa-plus text-white"></i></a>
-            </h6>
+            <div class="button-expired">
+                <h6 class="m-0 font-weight-bold text-secondary">
+                    <a href="{{ route('travels.index') }}"><i class="fa fa-arrow-left text-secondary"></i></a>
+                </h6>
+                <h6 class="m-0 font-weight-bold text-primary text-right">
+                    <a href="{{ route('travel.restoreall') }}" class="btn btn-success btn-sm">Restore all</a>
+                    <a href="{{ route('travel.permanentall') }}" class="btn btn-danger btn-sm">Delete all</a>
+                </h6>
+            </div>
         </div>
         <div class="card-body">
         <div class="table-responsive">
