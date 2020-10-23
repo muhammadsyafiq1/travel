@@ -193,9 +193,9 @@ class TravelPackageController extends Controller
         if($filterKeyword){
            $travels = TravelPackage::with('gallery')->has('gallery')
            ->where('country', 'LIKE', "%$filterKeyword%")
-           ->get();
+           ->paginate(12);
         } else {
-            $travels = TravelPackage::with('gallery')->has('gallery')->get();
+            $travels = TravelPackage::with('gallery')->has('gallery')->paginate(12);
         }
         
         return view('pages.user.lengkap', compact('travels'));

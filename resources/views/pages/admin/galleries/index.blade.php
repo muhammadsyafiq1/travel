@@ -22,6 +22,7 @@
             <table id="crudtable" class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
             <thead>
                 <tr>
+                    <th>#</th>
                     <th>Travel</th>
                     <th>Image</th>
                     <th>Action</th>
@@ -46,6 +47,7 @@
                 url: '{!! url()->current() !!}',
             },
             columns: [
+                {data: 'id', name: 'id'},
                 {data: 'travelpackage.title', name: 'travelpackage.title'},
                 {data: 'image', name: 'image'},
                 {

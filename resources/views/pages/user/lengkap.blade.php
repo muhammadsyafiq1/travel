@@ -20,7 +20,7 @@
                         <div class="travel-country">{{ $travel->title }}</div>
                         <div class="travel-location">{{ $travel->country }}</div>
                         <div class="travel-button mt-auto">
-                            <a href="#" class="btn btn-travel-details px-4">
+                            <a href="{{ route('travel.detail',$travel->slug) }}" class="btn btn-travel-details px-4">
                                 View Details
                             </a>
                         </div>
@@ -34,7 +34,14 @@
                     </div>
                 @endforelse
             </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="text-center">
+                        {{ $travels->links() }}
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
-    </main>
+</main>
 @endsection

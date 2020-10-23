@@ -26,9 +26,9 @@ class GalleryController extends Controller
            ->addColumn('action', function($item){
                return '
                <form action="'.route('galleries.destroy',$item->id).'" method="POST">
-               '.method_field('delete'). csrf_field().'
+               '.method_field('DELETE'). csrf_field().'
                     <button class="btn btn-sm btn-danger d-inline" type="submit" onClick="return confirm("Are you Sure?")">
-                        <i class="fa fa-trash"></i>
+                        Delete
                    </button>
                </form>
                ';
@@ -110,7 +110,8 @@ class GalleryController extends Controller
     public function destroy($id)
     {
         $gallery = Gallery::findOrFail($id);
+        dd($gallery); die;
         $gallery->delete();
-        return redirect(route('galleries.index'))->with('info','Gallery has been Deleted');
+        return 'berhasil';
     }
 }

@@ -30,47 +30,28 @@
                         {{ $travel->country }}
                     </p>
                     <!-- zoom -->
+                    @if ($travel->gallery->count())
                     <div class="gallery">
                         <div class="xzoom-container">
-                            <img src="/frontend/frontend/images/logos/details.jpg" 
+                            <img src="{{ Storage::url($travel->gallery->first()->image) }}"
                                 class="xzoom" 
-                                id="xzoom-default" 
-                                xoriginal="/frontend/frontend/images/logos/details.jpg">
+                                id="xzoom-default"
+                                xoriginal="{{ Storage::url($travel->gallery->first()->image) }}"
+                            >
                         </div>
                         <!-- thumbails -->
                         <div class="xzoom-thumbs">
-                            <a href="/frontend/frontend/images/logos/details.jpg">
-                            <img src="/frontend/frontend/images/logos/details.jpg" 
-                                class="xzoom-gallery" 
-                                width="128" 
-                                xpreview="/frontend/frontend/images/logos/details.jpg"">
-                            </a>
-                            <a href="/frontend/frontend/images/logos/details.jpg">
-                            <img src="/frontend/frontend/images/logos/details.jpg" 
-                                class="xzoom-gallery" 
-                                width="128" 
-                                xpreview="/frontend/frontend/images/logos/details.jpg"">
-                            </a>
-                            <a href="/frontend/frontend/images/logos/details.jpg">
-                            <img src="/frontend/frontend/images/logos/details.jpg" 
-                                class="xzoom-gallery" 
-                                width="128" 
-                                xpreview="/frontend/frontend/images/logos/details.jpg"">
-                            </a>
-                            <a href="/frontend/frontend/images/logos/details.jpg">
-                            <img src="/frontend/frontend/images/logos/details.jpg" 
-                                class="xzoom-gallery" 
-                                width="128" 
-                                xpreview="/frontend/frontend/images/logos/details.jpg"">
-                            </a>
-                            <a href="/frontend/frontend/images/logos/details.jpg">
-                            <img src="/frontend/frontend/images/logos/details.jpg" 
-                                class="xzoom-gallery" 
-                                width="128" 
-                                xpreview="/frontend/frontend/images/logos/details.jpg"">
-                            </a>
+                            @foreach ($travel->gallery as $gallery)
+                                <a href="{{ Storage::url($gallery->image) }}">
+                                <img src="{{ Storage::url($gallery->image) }}" 
+                                    class="xzoom-gallery" 
+                                    width="128px;" 
+                                    xpreview="{{ Storage::url($gallery->image) }}"">
+                                </a>
+                            @endforeach
                         </div>
                     </div>
+                    @endif
                     <h2 class="mt-3">Tentang wisata</h2>
                         <p>
                             {{ $travel->about }}
@@ -146,12 +127,36 @@
                     </table>
                 </div>
                 <div class="join-container">
+                    @auth
                     <a href="#" class="btn btn-block btn-join-now mt-3 py-2">
                         Join Now
                     </a>
+                    @else
+                    <a href="{{ route('login') }}" class="btn btn-block btn-join-now mt-3 py-2">
+                        Login
+                    </a>
+                    @endauth
                 </div>
             </div>
         </div>
     </div>
 </section>
 @endsection
+
+@push('styles')
+<link rel="stylesheet" href="/frontend/frontend/libraries/xzoom/xzoom.css">
+@endpush
+
+@push('scripts')
+<script src="/frontend/frontend/libraries/xzoom/xzoom.min.js"></script>
+<script>
+    $(document).ready(function(){
+        $('.xzoom, .xzoom-gallery').xzoom({
+            zoomWidth: 500,
+            title: false,
+            tint: '#333',
+            xoffset: 15
+        });
+    });
+</script>
+@endpush

@@ -6,6 +6,7 @@
     <title>@yield('title')</title>
     <!--Font awesome-->
     @include('includes.frontend.styles')
+    @stack('styles')
 </head>
 <body>
 
@@ -20,5 +21,6 @@
 
     <!--scripts-->
     @include('includes.frontend.scripts')
+    @stack('scripts')
 </body>
 </html>
