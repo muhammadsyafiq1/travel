@@ -18,7 +18,7 @@ class TravelSeeder extends Seeder
         $travels = [];
         $faker = Faker::create();
 
-        for($i = 0; $i < 100; $i++){
+        for($i = 0; $i < 50; $i++){
             $title = $faker->sentence(mt_rand(3,6));
             $title = str_replace('-','',$title);
             $slug = str_replace('','-', strtolower($title));
@@ -31,7 +31,7 @@ class TravelSeeder extends Seeder
                 'about' =>  "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nihil porro nemo, provident illo fugiat ducimus voluptas, assumenda quam vero eos deserunt praesentium iste quisquam alias unde enim. Iste, distinctio voluptates?",
                 'featured_event' => "tari zaman",
                 'language' => $faker->country,
-                'food' => "seblak",
+                'food' => "hamburger",
                 'departure_date' => $faker->date,
                 'type' => "open trip",
                 'price' => 1000000,

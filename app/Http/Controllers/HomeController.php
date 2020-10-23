@@ -23,8 +23,13 @@ class HomeController extends Controller
     public function index()
     {
         $customer = User::where('roles', 'customer')->count();
-        $travels = TravelPackage::with('gallery')->has('gallery')->get();
-        $country = DB::table('travel_packages')->distinct('country')->count();
+        $travels = TravelPackage::with('gallery')->has('gallery')
+        ->orderBy('point','DESC')
+        ->limit(4)
+        ->get();
+        $country = DB::table('travel_packages')
+        ->distinct('country')
+        ->count();
         return view('pages.user.index', compact('travels','customer','country'));
     }
 }

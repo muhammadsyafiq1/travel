@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\TravelDetailController;
 use App\Http\Controllers\TravelPackageController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -19,6 +20,7 @@ use Illuminate\Support\Facades\Auth;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('travel/lengkap/', [TravelPackageController::class, 'lengkap'])->name('travel.lengkap');
+Route::get('travel/{slug}/detail', [TravelDetailController::class, 'index'])->name('travel.detail');
 
 Auth::routes();
 
