@@ -5,7 +5,8 @@
 @endsection
 
 @section('content')
-    <main>
+<section class="section-details-header"></section>
+    <main style="margin-top: -250px;">
         <section class="section-popular-content"id="popularContent" style="margin-top: 80px">
         <div class="container">
             <form class="form-inline my-2 my-lg-0" action="{{ route('travel.lengkap') }}">
