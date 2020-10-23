@@ -54,6 +54,18 @@
       </div>
     </li>
 
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#transaction" aria-expanded="true" aria-controls="transaction">
+        <i class="fa fa-user"></i>
+        <span>Manage Transactions</span>
+      </a>
+      <div id="transaction" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+        <div class="bg-white py-2 collapse-inner rounded">
+          <a class="collapse-item" href="{{ route('transactions.index') }}">Data Transaction</a>
+        </div>
+      </div>
+    </li>
+
     <!-- Divider -->
     <hr class="sidebar-divider">
 

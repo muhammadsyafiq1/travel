@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\TravelDetailController;
 use App\Http\Controllers\TravelPackageController;
@@ -34,4 +35,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('travel/permanent/{id}', [TravelPackageController::class, 'permanent'])->name('travel.permanent');
     Route::get('travel/permanentall', [TravelPackageController::class, 'permanentall'])->name('travel.permanentall');
     Route::resource('galleries', App\Http\Controllers\GalleryController::class);
+
+    Route::resource('transactions', App\Http\Controllers\TransactionController::class);
+    Route::get('/checkout/{id}', [CheckoutController::class, 'index'])->name('checkout');
 });

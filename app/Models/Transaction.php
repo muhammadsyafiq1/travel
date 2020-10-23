@@ -26,4 +26,9 @@ class Transaction extends Model
         return $this->belongsTo(TravelPackage::class, 'travel_packages_id');
     }
 
+    public function transaction_detail()
+    {
+        return $this->hasMany(Transaction_detail::class, 'transaction_id');
+    }
+
 }
