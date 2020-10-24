@@ -13,18 +13,16 @@
                     {{ session('info') }}
                 </div>
             @endif
-            <h6 class="m-0 font-weight-bold text-primary">
-                <a href="#" class="btn btn-primary btn-sm"><i class="fa fa-plus text-white"></i></a>
-            </h6>
         </div>
         <div class="card-body">
         <div class="table-responsive">
             <table id="crudtable" class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
             <thead>
                 <tr>
+                    <th>ID</th>
+                    <th>Customer</th>
                     <th>Travel</th>
-                    <th>Type</th>
-                    <th>Price</th>
+                    <th>Status</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -36,3 +34,29 @@
     </div>
 </div>
 @endsection
+
+@push('scripts')
+    <script>
+        var datatable = $("#crudtable").DataTable({
+            processing: true,
+            serverSide: true,
+            ordering: true,
+            ajax: {
+                url: '{!! url()->current() !!}',
+            },
+            columns: [
+                {data: 'id', name: 'id'},
+                {data: 'user.name', name: 'user.name'},
+                {data: 'travelpackage.title', name: 'travelpackage.title'},
+                {data: 'transaction_status', name: 'transaction_status'},
+                {
+                    data: 'action',
+                    name: 'action',
+                    orderable: false,
+                    searcable: false,
+                    width: '15%'
+                },
+            ]
+        })
+    </script>
+@endpush
