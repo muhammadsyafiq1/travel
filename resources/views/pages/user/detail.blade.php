@@ -128,7 +128,7 @@
                 </div>
                 <div class="join-container">
                     @auth
-                    <a href="#" class="btn btn-block btn-join-now mt-3 py-2">
+                    <a href="{{ route('checkout.proccess',$travel->id) }}" class="btn btn-block btn-join-now mt-3 py-2">
                         Join Now
                     </a>
                     @else

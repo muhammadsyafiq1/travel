@@ -51,7 +51,7 @@
                     <div class="card card-details">
                         <h1>Whats is going</h1>
                         <p>
-                            Trip to ubud, Bali, indonesia
+                            {{ $transaction->travelpackage->title }}
                         </p>
                         <div class="attendee">
                             <table class="table table-responsive-sm text-center">
@@ -66,21 +66,26 @@
                                    </tr> 
                                 </thead>
                                 <tbody>
+                                    @forelse ($transaction->transaction_detail as $detail)
                                     <tr>
                                         <td>
-                                            <img src="/frontend/frontend/images/logos/avatar-1.png" height="60">
+                                            @if ($transaction->user->avatar)
+                                                <img src="{{ Storage::url($transaction->user->avatar) }}" height="60px;">
+                                            @else
+                                                <img src="https://ui-avatars.com/api/?name={{ $detail->username }}" height="60" class="rounded-circle" />
+                                            @endif
                                         </td>
                                         <td class="align-middle">
-                                             Angga Risky
+                                             {{ $detail->username }}
                                         </td>
                                         <td class="align-middle">
-                                            CN
+                                            {{ $detail->nationality }}
                                         </td>
                                         <td class="align-middle">
-                                            N/A
+                                            {{ $detail->is_visa === 1 ? '30 DAYS' : 'N/A' }}
                                         </td>
                                         <td class="align-middle">
-                                            Active
+                                            {{ \Carbon\Carbon::createFromDate($detail->doe_passport) > \Carbon\Carbon::now() ? 'Active' : 'Inactive' }}
                                         </td>
                                         <td class="align-middle">
                                             <a href="#">
@@ -88,32 +93,51 @@
                                             </a>
                                         </td>
                                     </tr>
+                                    @empty
+                                        <div class="col-12">
+                                            <div class="alert alert-success">
+                                                <h3>Anda belum memilih travel.</h3>
+                                            </div>
+                                        </div>
+                                    @endforelse
                                 </tbody>
                             </table>
                         </div>
                         <div class="member mt-3">
                             <h2>Add Member</h2>
-                            <form class="form-inline">
+                            <form class="form-inline" action="{{ route('checkout.create',$transaction->id) }}" method="POST">
+                                @csrf
                                 <label for="username" class="sr-only">Name</label>
                                 <input 
                                     type="text" 
-                                    class="form-control mb-2 mr-sm-2"
+                                    class="form-control mb-2 mr-sm-2 @error('username') is-invalid @enderror"
                                     id="username"
                                     name="username"
                                     placeholder="Username"
+                                    style="width: 160px;"
                                 />
-                                <label for="visa" class="sr-only">Visa</label> 
-                                <select name="visa" id="visa" class="custom-select mb-2 mr-sm-2">
+                                <label for="natioanlity" class="sr-only">Nat</label>
+                                <input type="text" 
+                                    class="form-control mb-2 mr-sm-2 @error('nationality') is-invalid @enderror"
+                                    name="nationality"
+                                    style="width: 50px" 
+                                    id="natioanlity"
+                                    placeholder="NAT"
+                                />
+                                <label for="is_visa" class="sr-only">Visa</label> 
+                                <select name="is_visa" id="is_visa" class="custom-select mb-2 mr-sm-2 @error('is_visa') is-invalid @enderror">
                                     <option value="0" disabled="true" selected="true">Preference</option>
-                                    <option value="30 Days">3O Days</option>
-                                    <option value="N/A">N/A</option>
+                                    <option value="1">3O Days</option>
+                                    <option value="0">N/A</option>
                                 </select>
-                                <label for="date" class="sr-only">Date</label>
+                                <label for="doe_passport" class="sr-only">Passport</label>
                                 <input 
                                     type="date" 
-                                    class="form-control mb-2 mr-sm-2"
-                                    id="date"
-                                    name="date"
+                                    class="form-control mb-2 mr-sm-2 @error('doe_passport') is-invalid @enderror"
+                                    id="doe_passport"
+                                    name="doe_passport"
+                                    placeholder="Doe passport"
+                                    style="width: 170px;"
                                 />
                                 <button type="submit" class="btn btn-add-now mb-2 px-4">
                                     Add Now
@@ -133,32 +157,32 @@
                             <tr>
                                 <th width="50%">Members</th>
                                 <td width="50%" class="text-right">
-                                    2 person
+                                    {{ $transaction->transaction_detail->count() }} person
                                 </td>
                             </tr>
                             <tr>
-                                <th width="50%">Additinal visa</th>
+                                <th width="50%">Additional visa</th>
                                 <td width="50%" class="text-right">
-                                    $ 190.00
+                                    Rp. {{ number_format( $transaction->additional_visa == 1 ? '500000' : 'N/A' ) }}
                                 </td>
                             </tr>
                             <tr>
                                 <th width="50%">Trip Price</th>
                                 <td width="50%" class="text-right">
-                                    $ 80,00 / person
+                                    {{ $transaction->travelpackage->price }} / person
                                 </td>
                             </tr>
                             <tr>
                                 <th width="50%">Sub total</th>
                                 <td width="50%" class="text-right text-total">
-                                    $ 280,00
+                                    Rp.{{ number_format($transaction->transaction_total) }}
                                 </td>
                             </tr>
                             <tr>
                                 <th width="70%">Total (+ Uniqcode)</th>
                                 <td width="30%" class="text-right text-toal">
-                                    <span class="text-blue">$ 279,</span>
-                                    <span class="text-orange">33</span>
+                                    <span class="text-blue">Rp.{{ number_format($transaction->transaction_total) }}.</span>
+                                    <span class="text-orange">{{ mt_rand(0,99) }}</span>
                                 </td>
                             </tr>
                         </table>
