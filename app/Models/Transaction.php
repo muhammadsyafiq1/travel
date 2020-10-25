@@ -16,6 +16,8 @@ class Transaction extends Model
         ,'transaction_total','transaction_status','doe_passport'
     ];
 
+    
+
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');
