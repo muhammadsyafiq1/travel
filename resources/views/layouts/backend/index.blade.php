@@ -21,7 +21,11 @@
   <div id="wrapper">
 
     <!-- Sidebar -->
-    @include('includes.backend.sidebar')
+    @if (Auth::user()->roles == 'admin' || Auth::user()->roles == 'staff')
+      @include('includes.backend.sidebar')
+    @else
+      @include('includes.profile.sidebar')
+    @endif
     <!-- End of Sidebar -->
 
     <!-- Content Wrapper -->
@@ -31,10 +35,18 @@
       <div id="content">
 
         <!-- Topbar -->
+        @if (Auth::user()->roles == 'admin' || Auth::user()->roles == 'staff')
           @include('includes.backend.navbar')
+        @else
+          @include('includes.profile.navbar')
+        @endif
+          
         <!-- End of Topbar -->
-
-        @yield('content')
+        @if (Auth::user()->roles == 'admin' || Auth::user()->roles == 'staff')
+          @yield('content')
+        @else
+          @yield('profile')
+        @endif
       </div>
       <!-- End of Main Content -->
 

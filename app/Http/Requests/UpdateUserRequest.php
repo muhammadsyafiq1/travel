@@ -25,7 +25,7 @@ class UpdateUserRequest extends FormRequest
     {
         return [
             'name' => 'max:50',
-            'username' => 'unique:users,username',
+            'username' => 'max:50',
             'avatar' => 'image'
         ];
     }

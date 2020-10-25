@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TravelDetailController;
 use App\Http\Controllers\TravelPackageController;
 use Illuminate\Support\Facades\Route;
@@ -42,4 +43,8 @@ Route::group(['middleware' => ['auth','CheckRole:admin,staff']], function () {
     Route::post('/checkout/{idTransaction}/create', [CheckoutController::class, 'create'])->name('checkout.create');
     Route::get('/checkout/{id}/delete', [CheckoutController::class, 'delete'])->name('checkout.delete');
     Route::get('/checkout/{id}/success', [CheckoutController::class, 'success'])->name('checkout.success');
+});
+
+Route::group(['middleware' => ['auth','CheckRole:customer']], function () {
+    Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
 });

@@ -26,7 +26,13 @@
                         Service
                     </a>
                     <div class="dropdown-menu">
-                        <a href="{{ route('dashboard') }}" class="dropdown-item">Dashboard</a>
+                        @auth
+                            @if (Auth::user()->roles == 'admin' || Auth::user()->roles == 'staff')
+                                <a href="{{ route('dashboard') }}" class="dropdown-item">Dashboard Admin</a>
+                            @else
+                                <a href="{{ route('profile') }}" class="dropdown-item">Dashboard User</a>
+                            @endif
+                        @endauth
                         <a href="#" class="dropdown-item">Info</a>
                         <a href="#" class="dropdown-item">Help</a>
                     </div>
