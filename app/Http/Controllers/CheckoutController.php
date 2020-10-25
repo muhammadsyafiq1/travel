@@ -28,7 +28,7 @@ class CheckoutController extends Controller
             'travel_packages_id' => $travel->id,
             'user_id' => $user->id,
             'additional_visa' => $user->is_visa,
-            'transaction_status' => 'pending',
+            'transaction_status' => 'incart',
             'transaction_total' => $travel->price,
         ]);
 
@@ -78,5 +78,13 @@ class CheckoutController extends Controller
         $transaction->save();
         $detail->delete();
         return redirect(route('checkout', $detail->transaction->id));
+    }
+
+    public function success(Request $request ,$id)
+    {
+        $transaction = Transaction::findOrFail($id);
+        $transaction->transaction_status = "pending";
+        $transaction->save();
+        return view('pages.user.success');
     }
 }
