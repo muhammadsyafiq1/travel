@@ -16,7 +16,7 @@ class CheckoutController extends Controller
     {
         $transaction = Transaction::with(['user','travelpackage','transaction_detail'])
             ->findOrFail($id);
-        return view('layouts.frontend.checkouts.index', compact('transaction'));
+        return view('pages.user.checkout', compact('transaction'));
     }
 
     public function proccess($idTravel)
@@ -63,5 +63,20 @@ class CheckoutController extends Controller
         $transaction->save();
 
         return redirect(route('checkout',$idTransaction));
+    }
+
+    public function delete($id)
+    {
+        $detail = Transaction_detail::findOrFail($id);
+        $transaction = Transaction::with('travelpackage')->findOrFail($detail->transaction_id);
+
+        if($detail->is_visa == 1){
+            $transaction->transaction_total -= 500000;
+        }
+
+        $transaction->transaction_total  -= $transaction->travelpackage->price;
+        $transaction->save();
+        $detail->delete();
+        return redirect(route('checkout', $detail->transaction->id));
     }
 }

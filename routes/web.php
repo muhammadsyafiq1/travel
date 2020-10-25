@@ -40,4 +40,5 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/checkout/{id}', [CheckoutController::class, 'index'])->name('checkout');
     Route::get('/checkout/{idTravel}/proccess', [CheckoutController::class, 'proccess'])->name('checkout.proccess');
     Route::post('/checkout/{idTransaction}/create', [CheckoutController::class, 'create'])->name('checkout.create');
+    Route::get('/checkout/{id}/delete', [CheckoutController::class, 'delete'])->name('checkout.delete');
 });
