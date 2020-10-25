@@ -25,7 +25,7 @@ Route::get('travel/{slug}/detail', [TravelDetailController::class, 'index'])->na
 
 Auth::routes();
 
-Route::group(['middleware' => 'auth'], function () {
+Route::group(['middleware' => ['auth','CheckRole:admin,staff']], function () {
     Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboard');
     Route::resource('users', App\Http\Controllers\UserController::class);
     Route::resource('travels', App\Http\Controllers\TravelPackageController::class);
