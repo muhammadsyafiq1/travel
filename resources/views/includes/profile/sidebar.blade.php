@@ -35,7 +35,7 @@
       <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
         <div class="bg-white py-2 collapse-inner rounded">
           <a class="collapse-item" href="#">Profile</a>
-          <a class="collapse-item" href="#">Change password</a>
+          <a class="collapse-item" href="{{ route('user.change-password', $user->id) }}">Change password</a>
         </div>
       </div>
     </li>

@@ -6,6 +6,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TravelDetailController;
 use App\Http\Controllers\TravelPackageController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -47,4 +48,7 @@ Route::group(['middleware' => ['auth','CheckRole:admin,staff']], function () {
 
 Route::group(['middleware' => ['auth','CheckRole:customer']], function () {
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
+    Route::get('user/{id}/change-password', [ProfileController::class, 'showchangePasword'])->name('user.change-password');
+    Route::post('user/{id}/update-password', [ProfileController::class, 'changePasword'])->name('user.update-password');
+    Route::post('user/{id}/account-setting', [ProfileController::class, 'accountSetting'])->name('user.account-setting');
 });

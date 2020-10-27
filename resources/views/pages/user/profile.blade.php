@@ -7,7 +7,7 @@
 @section('profile')
 <div class="container-fluid">
     <div class="card shadow mb-4 p-2">
-        <form action="{{ route('users.store') }}" method="POST" enctype="multipart/form-data">
+        <form action="#" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="form-group">
                 <label for="avatar">Avatar</label> <br>
@@ -58,7 +58,6 @@
                     </span>
                 @enderror
             </div>
-            <button type="submit" class="btn btn-primary mt-4">Submit</button>
         </form>
     </div>
 </div>
