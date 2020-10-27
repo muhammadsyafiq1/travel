@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\UpdateUserRequest;
+use App\Models\Transaction;
 
 class ProfileController extends Controller
 {
@@ -42,6 +43,13 @@ class ProfileController extends Controller
         $item->update($data);
 
         return redirect()->back();
+    }
+
+    public function history()
+    {
+        $user = Auth::user();
+        $history = Transaction::with(['user','travelpackage'])->where('user_id','=', $user->id)->get();
+        return view('pages.user.history', compact('history'));
     }
 
 }

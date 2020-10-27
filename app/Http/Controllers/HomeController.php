@@ -31,7 +31,7 @@ class HomeController extends Controller
         $country = DB::table('travel_packages')
             ->distinct('country')
             ->count();
-        $testimonials = Testimonial::with(['user','travelpackage'])->get();
+        $testimonials = Testimonial::with(['user','travelpackage'])->where('content','!=', NULL)->get();
         return view('pages.user.index', compact('travels','customer','country','testimonials'));
     }
 }

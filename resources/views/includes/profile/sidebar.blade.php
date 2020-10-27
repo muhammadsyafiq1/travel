@@ -35,7 +35,19 @@
       <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
         <div class="bg-white py-2 collapse-inner rounded">
           <a class="collapse-item" href="#">Profile</a>
-          <a class="collapse-item" href="{{ route('user.change-password', $user->id) }}">Change password</a>
+          <a class="collapse-item" href="{{ route('user.change-password', Auth::user()->id) }}">Change password</a>
+        </div>
+      </div>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTheree" aria-expanded="true" aria-controls="collapseTheree">
+        <i class="fa fa-user"></i>
+        <span>History</span>
+      </a>
+      <div id="collapseTheree" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+        <div class="bg-white py-2 collapse-inner rounded">
+          <a class="collapse-item" href="{{ route('history.travel') }}">History Travel</a>
         </div>
       </div>
     </li>

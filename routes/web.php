@@ -41,8 +41,9 @@ Route::group(['middleware' => ['auth','CheckRole:admin,staff']], function () {
     Route::resource('transactions', App\Http\Controllers\TransactionController::class);
 });
 
-Route::group(['middleware' => ['auth','CheckRole:customer']], function () {
+Route::group(['middleware' => ['auth','CheckRole:customer,staff,admin']], function () {
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
+    Route::get('/history-travel', [ProfileController::class, 'history'])->name('history.travel');
     Route::get('user/{id}/change-password', [ProfileController::class, 'showchangePasword'])->name('user.change-password');
     Route::post('user/{id}/update-password', [ProfileController::class, 'changePasword'])->name('user.update-password');
     Route::post('user/{id}/account-setting', [ProfileController::class, 'accountSetting'])->name('user.account-setting');
