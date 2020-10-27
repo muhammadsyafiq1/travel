@@ -39,11 +39,6 @@ Route::group(['middleware' => ['auth','CheckRole:admin,staff']], function () {
     Route::resource('galleries', App\Http\Controllers\GalleryController::class);
 
     Route::resource('transactions', App\Http\Controllers\TransactionController::class);
-    Route::get('/checkout/{id}', [CheckoutController::class, 'index'])->name('checkout');
-    Route::get('/checkout/{idTravel}/proccess', [CheckoutController::class, 'proccess'])->name('checkout.proccess');
-    Route::post('/checkout/{idTransaction}/create', [CheckoutController::class, 'create'])->name('checkout.create');
-    Route::get('/checkout/{id}/delete', [CheckoutController::class, 'delete'])->name('checkout.delete');
-    Route::get('/checkout/{id}/success', [CheckoutController::class, 'success'])->name('checkout.success');
 });
 
 Route::group(['middleware' => ['auth','CheckRole:customer']], function () {
@@ -51,4 +46,10 @@ Route::group(['middleware' => ['auth','CheckRole:customer']], function () {
     Route::get('user/{id}/change-password', [ProfileController::class, 'showchangePasword'])->name('user.change-password');
     Route::post('user/{id}/update-password', [ProfileController::class, 'changePasword'])->name('user.update-password');
     Route::post('user/{id}/account-setting', [ProfileController::class, 'accountSetting'])->name('user.account-setting');
+
+    Route::get('/checkout/{id}', [CheckoutController::class, 'index'])->name('checkout');
+    Route::get('/checkout/{idTravel}/proccess', [CheckoutController::class, 'proccess'])->name('checkout.proccess');
+    Route::post('/checkout/{idTransaction}/create', [CheckoutController::class, 'create'])->name('checkout.create');
+    Route::get('/checkout/{id}/delete', [CheckoutController::class, 'delete'])->name('checkout.delete');
+    Route::get('/checkout/{id}/success', [CheckoutController::class, 'success'])->name('checkout.success');
 });

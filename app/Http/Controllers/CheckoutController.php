@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateMemberRequest;
+use App\Models\Testimonial;
 use App\Models\Transaction;
 use App\Models\Transaction_detail;
 use App\Models\TravelPackage;
@@ -82,9 +83,15 @@ class CheckoutController extends Controller
 
     public function success(Request $request ,$id)
     {
-        $transaction = Transaction::findOrFail($id);
+        $transaction = Transaction::with('travelpackage')->findOrFail($id);
         $transaction->transaction_status = "pending";
         $transaction->save();
+        // simpan ke table testimonial
+        Testimonial::create([
+            'user_id' => Auth::user()->id,
+            'travel_packages_id' => $transaction->travelpackage->id,
+        ]);
+        
         return view('pages.user.success');
     }
 }

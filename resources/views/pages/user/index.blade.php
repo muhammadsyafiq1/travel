@@ -127,59 +127,24 @@
         <div class="container">
             <div class="section-popular-travel row 
                 justify-content-center">
+                @foreach ($testimonials as $testimonial)
                 <div class="col-sm-6 col-md-6 col-lg-4">
                     <div class="card card-testimonial text-center">
                         <div class="testimonial-content">
-                            <img src="/frontend/frontend/images/logos/testimonial-1.png" 
+                            <img src="{{ Storage::url($testimonial->user->avatar) }}" 
                                 alt="user" class="rounded-circle mb-4">
-                            <h3 class="mb-4">Angga Risky</h3>
+                            <h3 class="mb-4">{{ $testimonial->user->username }}</h3>
                             <p class="testimonial">
-                                "it was glarious and i could
-                                say wohooo for
-                                every single moment dankeeee"
+                                "{{ $testimonial->content }}"
                             </p>
                             <hr>
                             <p class="trip-to mt-2">
-                                Trip to ubud
+                                {{ $testimonial->travelpackage->title }}
                             </p>
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-6 col-md-6 col-lg-4">
-                    <div class="card card-testimonial text-center">
-                        <div class="testimonial-content">
-                            <img src="/frontend/frontend/images/logos/testimonial-2.png" 
-                                alt="user" class="rounded-circle mb-4">
-                            <h3 class="mb-4">Shayna</h3>
-                            <p class="testimonial">
-                                "it was glarious and i could
-                                say wohooo ""
-                            </p>
-                            <hr>
-                            <p class="trip-to mt-2">
-                                Trip to ubud
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-6 col-lg-4">
-                    <div class="card card-testimonial text-center">
-                        <div class="testimonial-content">
-                            <img src="/frontend/frontend/images/logos/testimonial-3.png" 
-                                alt="user" class="rounded-circle mb-4">
-                            <h3 class="mb-4">Shabrina</h3>
-                            <p class="testimonial">
-                                "it was glarious and i could
-                                say wohooo for
-                                every single moment dankeeee"
-                            </p>
-                            <hr>
-                            <p class="trip-to mt-2">
-                                Trip to ubud
-                            </p>
-                        </div>
-                    </div>
-                </div>
+                @endforeach
             </div>
             <div class="row">
                 <div class="col-12 text-center">
