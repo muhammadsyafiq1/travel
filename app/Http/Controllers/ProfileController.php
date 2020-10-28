@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\UpdateUserRequest;
+use App\Models\Testimonial;
 use App\Models\Transaction;
 use Illuminate\Support\Facades\Storage;
 
@@ -57,8 +58,28 @@ class ProfileController extends Controller
     public function history()
     {
         $user = Auth::user();
-        $history = Transaction::with(['user','travelpackage'])->where('user_id','=', $user->id)->get();
+        $history = Testimonial::with(['user','travelpackage'])->where('user_id','=', $user->id)->get();
         return view('pages.user.history', compact('history'));
+    }
+
+    public function ShowTestimonial()
+    {
+        $testimonials = Testimonial::where('user_id', '=' , Auth::user()->id)->get();
+        dd($testimonials);
+    }
+
+    public function GiveTestimonial($id)
+    {
+        $testimonial = Testimonial::findOrFail($id);
+        return view('pages.user.give-testimonial',compact('testimonial'));
+    }
+
+    public function PostTestimonial (Request $request, $id)
+    {
+        $data = $request->all();
+        $item = Testimonial::findOrFail($id);
+        $item->update($data);
+        return redirect(route('user.give-testimonial',$id))->with('info','testimonial berhasil ditambahkan.');
     }
 
 }

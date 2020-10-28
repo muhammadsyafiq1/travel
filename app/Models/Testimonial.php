@@ -10,7 +10,7 @@ class Testimonial extends Model
     use HasFactory;
 
     protected $fillable = [
-        'user_id','travel_packages_id',''
+        'user_id','travel_packages_id','content'
     ];
 
     public function user()

@@ -15,6 +15,7 @@
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">{{$item->created_at}}</div>
                             <div class="h5 mb-0 font-weight-bold text-gray-800">{{$item->travelpackage->title}}</div>
+                            <a href="{{ route('user.give-testimonial',$item->id) }}"><p>Berikan Testimonial.</p></a>
                         </div>
                             <div class="col-auto">
                                 <i class="fas fa-calendar fa-2x text-gray-300"></i>

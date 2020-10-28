@@ -47,6 +47,9 @@ Route::group(['middleware' => ['auth','CheckRole:customer,staff,admin']], functi
     Route::get('user/{id}/change-password', [ProfileController::class, 'showchangePasword'])->name('user.change-password');
     Route::post('user/{id}/update-password', [ProfileController::class, 'changePasword'])->name('user.update-password');
     Route::post('user/{id}/account-setting', [ProfileController::class, 'accountSetting'])->name('user.account-setting');
+    Route::get('user/testimonial', [ProfileController::class, 'ShowTestimonial'])->name('user.show-testimonial');
+    Route::get('user/{id}/give-testimonial', [ProfileController::class, 'GiveTestimonial'])->name('user.give-testimonial');
+    Route::post('user/{id}/post-testimonial', [ProfileController::class, 'PostTestimonial'])->name('user.post-testimonial');
 
     Route::get('/checkout/{id}', [CheckoutController::class, 'index'])->name('checkout');
     Route::get('/checkout/{idTravel}/proccess', [CheckoutController::class, 'proccess'])->name('checkout.proccess');

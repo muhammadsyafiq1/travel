@@ -48,7 +48,6 @@
       <div id="collapseTheree" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
         <div class="bg-white py-2 collapse-inner rounded">
           <a class="collapse-item" href="{{ route('history.travel') }}">History Travel</a>
-          <a class="collapse-item" href="#">Berikan Testimonial</a>
         </div>
       </div>
     </li>

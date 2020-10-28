@@ -134,9 +134,9 @@
                             <img src="{{ Storage::url($testimonial->user->avatar) }}" 
                                 alt="user" class="rounded-circle mb-4">
                             <h3 class="mb-4">{{ $testimonial->user->username }}</h3>
-                            <p class="testimonial">
-                                "{{ $testimonial->content }}"
-                            </p>
+                            <h5 class="testimonial">
+                                " {!! $testimonial->content !!} "
+                            </h5>
                             <hr>
                             <p class="trip-to mt-2">
                                 {{ $testimonial->travelpackage->title }}
@@ -152,7 +152,7 @@
                         px-4 mx-1 mt-4">
                         I need Help
                     </a>
-                    <a href="#" class="btn btn-get-started
+                    <a href="#popularContent" class="btn btn-get-started
                         px-4 mx-1 mt-4">
                         Get started
                     </a>
