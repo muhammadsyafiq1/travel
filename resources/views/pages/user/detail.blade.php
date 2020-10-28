@@ -13,7 +13,7 @@
                 <nav>
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item">
-                            <a href="{{ route('home') }}" class="text-muted">Paket Travel</a>
+                            <a href="{{ route('home') }}" class="text-muted">Pjaket Travel</a>
                         </li>
                         <li class="breadcrumb-item active">
                             Details
@@ -22,6 +22,11 @@
                 </nav>
             </div>
         </div>
+        @if (session('info'))
+                <div class="alert alert-danger">
+                    {{ session('info') }} <a href="{{ route('profile') }}">Lengkapi disini.</a>
+                </div>
+        @endif
         <div class="row">
             <div class="col-lg-8 pl-lg-0">
                 <div class="card card-details">

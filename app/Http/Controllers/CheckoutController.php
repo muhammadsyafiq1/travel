@@ -22,30 +22,34 @@ class CheckoutController extends Controller
 
     public function proccess($idTravel)
     {
-        $user = Auth::user();
-        $travel = TravelPackage::findOrFail($idTravel);
+       try {
+            $user = Auth::user();
+            $travel = TravelPackage::findOrFail($idTravel);
 
-        $transaction = Transaction::create([
-            'travel_packages_id' => $travel->id,
-            'user_id' => $user->id,
-            'additional_visa' => $user->is_visa,
-            'transaction_status' => 'incart',
-            'transaction_total' => $travel->price,
-        ]);
+            $transaction = Transaction::create([
+                'travel_packages_id' => $travel->id,
+                'user_id' => $user->id,
+                'additional_visa' => $user->is_visa,
+                'transaction_status' => 'incart',
+                'transaction_total' => $travel->price,
+            ]);
 
-        if($transaction->additional_visa == 1){
-            $transaction->transaction_total += 500000;
-        }
+            if($transaction->additional_visa == 1){
+                $transaction->transaction_total += 500000;
+            }
 
-        $transaction->save();
+            $transaction->save();
 
-        Transaction_detail::create([
-            'transaction_id' => $transaction->id,
-            'nationality' => $user->nationality,
-            'username' => $user->username,
-            'is_visa' => $user->is_visa,
-            'doe_passport' => Carbon::now()->addYear(5)
-        ]);
+            Transaction_detail::create([
+                'transaction_id' => $transaction->id,
+                'nationality' => $user->nationality,
+                'username' => $user->username,
+                'is_visa' => $user->is_visa,
+                'doe_passport' => Carbon::now()->addYear(5)
+            ]);
+       } catch (\Throwable $th) {
+            return redirect(route('travel.detail',$travel->slug))->with('info','Harap lengkapi data diri anda terlebih dahulu');
+       }
 
         return redirect(route('checkout', $transaction->id));
     }

@@ -21,6 +21,7 @@
                 </div>
                 <form action="{{ route('register') }}" method="POST" class="user">
                     @csrf
+                    <input type="hidden" value="customer" name="roles">
                 <div class="form-group row">
                     <div class="col-sm-6 mb-3 mb-sm-0">
                         <input name="name" type="text" class="form-control form-control-user @error('name') is-invalid @enderror" id="exampleFirstName" placeholder="Fullname" required>
@@ -50,6 +51,16 @@
                     </div>
                     <div class="col-sm-6">
                         <input type="password" class="form-control form-control-user" id="exampleRepeatPassword" name="password_confirmation" required autocomplete="new-password" placeholder="Repeat password">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-12">
+                        <input name="nationality" type="text" class="form-control form-control-user @error('nationality') is-invalid @enderror" id="exampleLastName" placeholder="Nationality" required>
+                        @error('nationality')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
                     </div>
                 </div>
                 <button type="submit" class="btn btn-primary btn-user btn-block">

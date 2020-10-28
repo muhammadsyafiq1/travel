@@ -47,8 +47,38 @@
             </div>
             <div class="form-group">
                 <label for="username">Username</label>
-                <input name="username" type="username" class="form-control @error('username') is-invalid @enderror" id="username" placeholder="Enter username" value="{{ old('username') ? old('username') : $user->username }}">
+                <input name="username" type="text" class="form-control @error('username') is-invalid @enderror" id="username" value="{{ old('username') ? old('username') : $user->username }}">
                 @error('username')
+                    <span class="invalid-feedback" role="alert">
+                        {{ $message }}
+                    </span>
+                @enderror
+            </div>
+            <div class="form-group">
+                <label for="nationality">nationality</label>
+                <input name="nationality" type="text" class="form-control @error('nationality') is-invalid @enderror" id="nationality" value="{{ old('nationality') ? old('nationality') : $user->nationality }}">
+                @error('nationality')
+                    <span class="invalid-feedback" role="alert">
+                        {{ $message }}
+                    </span>
+                @enderror
+            </div>
+            <div class="form-group">
+                <label for="phone">phone</label>
+                <input name="phone" type="number" class="form-control @error('phone') is-invalid @enderror" id="phone" value="{{ old('phone') ? old('phone') : $user->phone }}">
+                @error('phone')
+                    <span class="invalid-feedback" role="alert">
+                        {{ $message }}
+                    </span>
+                @enderror
+            </div>
+            <div class="form-group">
+                <label for="is_visa">Prefrence</label>
+                <select name="is_visa" id="is_visa" class="form-control">
+                    <option value="1" {{ $user->is_visa == 1 ? 'selected' : '' }}>30 DAYS</option>
+                    <option value="0" {{ $user->is_visa == 0 ? 'selected' : '' }}>N/A</option>
+                </select>
+                @error('is_visa')
                     <span class="invalid-feedback" role="alert">
                         {{ $message }}
                     </span>
