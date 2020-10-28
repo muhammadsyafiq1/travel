@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\UpdateUserRequest;
 use App\Models\Transaction;
+use Illuminate\Support\Facades\Storage;
 
 class ProfileController extends Controller
 {
@@ -36,13 +37,21 @@ class ProfileController extends Controller
         return redirect()->back();
     }
 
-    public function accountSetting (Request $request)
+    public function accountSetting (UpdateUserRequest $request)
     {
-        $data = $request->all();
+        $user = $request->all();
+        // dd($user); die;
+        if($request->hasFile('avatar')){
+            if($request->avatar && file_exists(storage_path('app/public/',$request->avatar))){
+                Storage::delete('public/',$request->avatar);
+            }
+            $file = $request->file('avatar')->store('avatars','public');
+            $user['avatar'] = $file;
+        }
         $item = Auth::user();
-        $item->update($data);
+        $item->update($user);
 
-        return redirect()->back();
+        return redirect()->back()->with('info','profile berhasil diupdate');
     }
 
     public function history()

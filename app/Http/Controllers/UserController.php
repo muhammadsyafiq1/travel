@@ -125,7 +125,7 @@ class UserController extends Controller
         $user->roles = $request->roles;
 
         if($request->hasFile('avatar')){
-            if($user->avatr && file_exists(storage_path('app/public/'.$user->avatar))){
+            if($user->avatar && file_exists(storage_path('app/public/'.$user->avatar))){
                 Storage::delete('public/'.$user->avatar);
             }
             $file = $request->file('avatar')->store(
