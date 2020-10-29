@@ -10,6 +10,8 @@ use App\Models\TravelPackage;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\TransactionSuccess;
 
 class CheckoutController extends Controller
 {
@@ -87,14 +89,21 @@ class CheckoutController extends Controller
 
     public function success(Request $request ,$id)
     {
-        $transaction = Transaction::with('travelpackage')->findOrFail($id);
+        $transaction = Transaction::with(['user','transaction_detail','travelpackage.gallery'])
+        ->findOrFail($id);
         $transaction->transaction_status = "pending";
         $transaction->save();
+
         // simpan ke table testimonial
         Testimonial::create([
             'user_id' => Auth::user()->id,
             'travel_packages_id' => $transaction->travelpackage->id,
         ]);
+
+        // kirim eticket ke user
+        Mail::to($transaction->user)->send(
+            new TransactionSuccess($transaction)
+        );
         
         return view('pages.user.success');
     }

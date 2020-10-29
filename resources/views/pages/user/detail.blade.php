@@ -59,7 +59,7 @@
                     @endif
                     <h2 class="mt-3">Tentang wisata</h2>
                         <p>
-                            {{ $travel->about }}
+                            {!! $travel->about !!}
                         </p>
                         <div class="features row">
                             <div class="col-md-4">

@@ -141,7 +141,7 @@
                         <tr>
                             <th width="50%">Additional visa</th>
                             <td width="50%" class="text-right">
-                                Rp. {{ number_format( $transaction->additional_visa == 1 ? '500000' : 'N/A' ) }}
+                                Rp. {{ number_format( $transaction->additional_visa == 1 ? '500000' : 0 ) }}
                             </td>
                         </tr>
                         <tr>

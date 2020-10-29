@@ -5,76 +5,77 @@
 @endsection
 
 @section('content')
-<div class="container">
-
-    <!-- Outer Row -->
-    <div class="row justify-content-center">
-
-    <div class="col-xl-10 col-lg-12 col-md-9">
-
-        <div class="card o-hidden border-0 shadow-lg my-5">
-        <div class="card-body p-0">
-            <!-- Nested Row within Card Body -->
-            <div class="row">
-            <div class="col-lg-6 d-none d-lg-block bg-login-image"></div>
-            <div class="col-lg-6">
-                <div class="p-5">
-                <div class="text-center">
-                    <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
-                </div>
-                <form class="user" action="{{ route('login') }}" method="POST">
-                    @csrf
-                    <div class="form-group">
-                        <input name="email" type="email" class="form-control form-control-user @error('email') is-invalid @enderror" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Enter Email Address...">
-                        @error('email')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                    </div>
-                    <div class="form-group">
-                        <input name="password" type="password" class="form-control form-control-user @error('password') is-invalid @enderror" id="exampleInputPassword" placeholder="Password">
-                        @error('password')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                    </div>
-                    <div class="form-group">
-                    <div class="custom-control custom-checkbox small">
-                        <input type="checkbox" class="custom-control-input" id="customCheck" {{ old('remember') ? 'checked' : '' }}>
-                        <label class="custom-control-label" for="customCheck">Remember Me</label>
-                    </div>
-                    </div>
-                    <button type="submit" class="btn btn-primary btn-user btn-block">
-                        Login
-                    </button>
-                    <hr>
-                    <a href="index.html" class="btn btn-google btn-user btn-block">
-                        <i class="fab fa-google fa-fw"></i> Login with Google
-                    </a>
-                    <a href="index.html" class="btn btn-facebook btn-user btn-block">
-                        <i class="fab fa-facebook-f fa-fw"></i> Login with Facebook
-                    </a>
-                </form>
-                <hr>
-                <div class="text-center">
-                    @if (Route::has('password.request'))
-                        <a class="small" href="forgot-password.html">Forgot Password?</a>
-                    @endif
-                </div>
-                <div class="text-center">
-                    <a class="small" href="{{ route('register') }}">Create an Account!</a>
-                </div>
+<main class="login-container">
+    <div class="container">
+        <div class="row page-login d-flex align-items-center">
+            <div class="section-left col-12 col-md-6" style="margin-bottom: 200px;">
+                <h1 class="mb-4">We explorer teh new <br> life much better</h1>
+                <img src="/frontend/frontend/images/logos/login.jpg" class="w-100 d-none d-sm-flex">
+            </div>
+            <div class="section-right col-12 col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="text-center">
+                            <img src="/frontend/frontend/images/logos/logo.png" alt="" class="mb-4 w-50">
+                        </div>
+                        <form action="{{ route('login') }}" method="POST">
+                            @csrf
+                            <div class="form-group">
+                                <label for="username">Email Address</label>
+                                <input 
+                                    type="email" 
+                                    class="form-control @error('email') is-invalid @enderror" 
+                                    id="username" 
+                                    name="email"
+                                />
+                                @error('email')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                            <div class="form-group">
+                                <label for="password">Password</label>
+                                <input 
+                                    type="password" 
+                                    class="form-control @error('password') is-invalid @enderror" 
+                                    id="password"
+                                    name="password"
+                                />
+                                @error('password')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                            <div class="form-group form-check">
+                                <input 
+                                    type="checkbox" 
+                                    class="form-check-input" 
+                                    id="checkbox"
+                                    {{ old('remember') ? 'checked' : '' }}
+                                />
+                                <label for="checkbox" class="form-check-label" id="checkbox">
+                                    Remember me
+                                </label>
+                            </div>
+                            <button type="submit" class="btn btn-login btn-block">
+                                Sign In
+                            </button>
+                        </form>
+                        <hr>
+                        <div class="text-center">
+                            @if (Route::has('password.request'))
+                                <a class="small" href="forgot-password.html">Forgot Password?</a>
+                            @endif
+                        </div>
+                        <div class="text-center">
+                            <a class="small" href="{{ route('register') }}">Create an Account!</a>
+                        </div>
+                     </div>
                 </div>
             </div>
-            </div>
         </div>
-        </div>
-
     </div>
-
-    </div>
-
-</div>
+</main>
 @endsection
