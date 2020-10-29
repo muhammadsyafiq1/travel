@@ -11,7 +11,7 @@ class TransactionSuccess extends Mailable
 {
     use Queueable, SerializesModels;
 
-    // MENERIMA DATA SETELAH TRANSACTION
+    // MENERIMA DATA TRANSACTION
     public $data;
 
     /**

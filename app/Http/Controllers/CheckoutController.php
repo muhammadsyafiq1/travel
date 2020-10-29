@@ -89,7 +89,7 @@ class CheckoutController extends Controller
 
     public function success(Request $request ,$id)
     {
-        $transaction = Transaction::with(['user','transaction_detail','travelpackage.gallery'])
+        $transaction = Transaction::with(['transaction_detail','travelpackage.gallery','user'])
         ->findOrFail($id);
         $transaction->transaction_status = "pending";
         $transaction->save();
