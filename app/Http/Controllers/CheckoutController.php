@@ -8,10 +8,13 @@ use App\Models\Transaction;
 use App\Models\Transaction_detail;
 use App\Models\TravelPackage;
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\TransactionSuccess;
+use Midtrans\Snap;
+use Midtrans\Config;
 
 class CheckoutController extends Controller
 {
@@ -100,11 +103,40 @@ class CheckoutController extends Controller
             'travel_packages_id' => $transaction->travelpackage->id,
         ]);
 
+        //KONFIGURASI MIDTRANS
+        Config::$serverKey = config('services.midtrans.serverKey');
+        Config::$isProduction = config('services.midtrans.isProduction');
+        Config::$isSanitized = config('services.midtrans.isSanitized');
+        Config::$is3ds = config('services.midtrans.is3ds');
+
+         //KONFIGURASI MIDTRANS
+         $midtrans = [
+            'transaction_details' => [
+                'order_id' => 'MIDTRANS-' . $transaction->id,
+                'gross_amount' => (int) $transaction->transaction_total,
+            ],
+            'customer_details' => [
+                'first_name' => $transaction->user->name,
+                'email' => $transaction->user->email,
+            ],
+            'enabled_payments' => [
+                'gopay', 'permata_va', 'bank_transfer'
+            ],
+            'vtweb' => []
+        ];
+
+        try {
+            //get snap payment page url
+            $paymentUrl = Snap::createTransaction($midtrans)->redirect_url;
+            // redirect to snap payment page
+            return redirect($paymentUrl);
+        } catch (Exception $e) {
+            echo $e->getMessage();
+        }
+
         // kirim eticket ke user
-        Mail::to($transaction->user)->send(
-            new TransactionSuccess($transaction)
-        );
-        
-        return view('pages.user.success');
+        // Mail::to($transaction->user)->send(
+        //     new TransactionSuccess($transaction)
+        // );
     }
 }

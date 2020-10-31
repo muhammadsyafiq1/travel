@@ -69,7 +69,7 @@
               </div>
             </a>
           @endforeach
-          <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
+          <a class="dropdown-item text-center small text-gray-500" href="{{ route('transactions.index') }}">Show All Alerts</a>
         </div>
       </li>
 
